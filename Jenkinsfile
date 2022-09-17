@@ -42,14 +42,13 @@ pipeline {
                     unstash(name: 'compiled-results') 
                     sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'" 
                 }
-                input message: 'Sudah selesai menggunakan Python App? (Klik "Proceed" untuk mengakhiri)'
-                sleep 1
             }   
             post {
                 success {
                     archiveArtifacts "${env.BUILD_ID}/sources/dist/add2vals" 
                     sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
                 }
+                sleep 60
             }
         }
     }   
