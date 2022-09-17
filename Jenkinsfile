@@ -23,11 +23,12 @@ pipeline {
             }
             steps {
                 sh 'py.test --junit-xml test-reports/results.xml sources/test_calc.py'
-                input message: 'Lanjut ke tahap Deploy? (Klik "Proceed" untuk melanjutkan)'
             }
             post {
                 always {
                     junit 'test-reports/results.xml'
+                    input message: 'Lanjut ke tahap Deploy? (Klik "Proceed" untuk melanjutkan)'
+                    sleep 1
                 }
             }
         }
@@ -43,6 +44,7 @@ pipeline {
                     sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'" 
                 }
                 input message: 'Sudah selesai menggunakan Python App? (Klik "Proceed" untuk mengakhiri)'
+                sleep 1
             }   
             post {
                 success {
