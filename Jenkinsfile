@@ -28,6 +28,7 @@ pipeline {
                 always {
                     junit 'test-reports/results.xml'
                 }
+                input message: 'Lanjut ke tahap Deploy? (Klik "Proceed" untuk melanjutkan)'
             }
         }
         stage('Deploy') { 
@@ -41,7 +42,7 @@ pipeline {
                     unstash(name: 'compiled-results') 
                     sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'" 
                 }
-                input message: 'Sudah selesai menggunakan React App? (Klik "Proceed" untuk mengakhiri)'
+                input message: 'Sudah selesai menggunakan Python App? (Klik "Proceed" untuk mengakhiri)'
             }   
             post {
                 success {
