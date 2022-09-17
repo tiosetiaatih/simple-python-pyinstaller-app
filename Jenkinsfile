@@ -30,7 +30,7 @@ pipeline {
                 }
             }
         }
-        stage('Deliver') { 
+        stage('Deploy') { 
             agent any
             environment { 
                 VOLUME = '$(pwd)/sources:/src'
@@ -41,6 +41,7 @@ pipeline {
                     unstash(name: 'compiled-results') 
                     sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'" 
                 }
+                input message: 'Sudah selesai menggunakan React App? (Klik "Proceed" untuk mengakhiri)'
             }   
             post {
                 success {
@@ -49,12 +50,5 @@ pipeline {
                 }
             }
         }
-        stage('Deploy') {
-            steps {
-                sh './jenkins/scripts/deliver.sh'
-                input message: 'Sudah selesai menggunakan Python App? (Klik "Proceed" untuk mengakhiri)'
-                sh './jenkins/scripts/kill.sh'
-            }
-        }
-    }
+    }   
 }
