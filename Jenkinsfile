@@ -29,6 +29,7 @@ pipeline {
                     junit 'test-reports/results.xml'
                 }
             }
+            input message: 'Lanjut ke tahap Deploy? (Klik "Proceed" untuk melanjutkan)'
         }
         stage('Deploy') { 
             agent any
